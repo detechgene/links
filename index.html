@@ -29,10 +29,10 @@
       --card-a: rgba(255, 255, 255, 0.88);   /* “white” with opacity */
         --card-b: rgba(216, 223, 231, 0.82);   /* slightly bluish with opacity */
 
-        --btn-a: #0b1220;                      /* dark navy */
+        --btn-a: #99a3b6;                      /* dark navy */
         --btn-b: #111b33;                      /* slightly lighter navy */
-        --btn-hover-a: #0c1b3a;                /* hover */
-        --btn-hover-b: #0b4aa6;                /* hover accent */
+        --btn-hover-a: #cddfff;                /* hover */
+        --btn-hover-b: #f0f5ff;                /* hover accent */
 
     }
 
@@ -117,41 +117,97 @@
         margin: 8px 0 38px 0;
         }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    /* ---------- Thumbnail grids ---------- */
+    .thumbs {
+      display: grid;
+      gap: 16px;
+      justify-items: center;
     }
 
-   .link {
-        text-decoration: none;
-        color: #ffffff;
+    /* Main thumbnails: 4 per row on PC, 2x2 on mobile */
+    .thumbs-main {
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: 28px;
+    }
 
-        /* ✅ button gradient */
-            background: linear-gradient(135deg, var(--btn-hover-a), var(--btn-hover-b));
+    /* Social thumbnails: always 4 in one row, smaller */
+    .thumbs-social {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(26, 48, 102, 0.12);
+    }
 
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 14px 16px;
-        border-radius: 12px;
-        font-weight: 600;
+    .thumb {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      text-decoration: none;
+      color: #1a3066;
+      font-family: 'Sora', 'Inter', system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      line-height: 1.2;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        /* makes the buttons look more “pressable” */
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    .thumb-box {
+      /* ICON PLACEHOLDER: the box shows a dashed outline until an icon loads */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 96px;
+      border-radius: 22%;
+      background: linear-gradient(135deg, var(--btn-hover-a), var(--btn-hover-b));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
 
-        transition: transform 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
-        }
+    .thumb-box::before {
+      content: "";
+      position: absolute;
+      inset: 22%;
+      border: 2px dashed rgba(255, 255, 255, 0.35);
+      border-radius: 28%;
+    }
 
-        .link:hover {
-            transform: translateY(-2px);
+    /* hide the placeholder once an icon is present */
+    .thumb-box:has(img)::before {
+      display: none;
+    }
 
-            /* ✅ hover gradient (different colors) */
-        background: linear-gradient(135deg, var(--btn-a), var(--btn-b));
+    .thumb-box img {
+      width: 52%;
+      height: 52%;
+      object-fit: contain;
+    }
 
-            border-color: rgba(56, 189, 248, 0.55);
+    .thumbs-social .thumb-box {
+      max-width: 60px;
+    }
 
-            /* small pop without changing color manually */
-            filter: brightness(1.05);
-            }
+    .thumbs-social .thumb {
+      font-size: 0.7rem;
+      font-weight: 500;
+      gap: 6px;
+    }
+
+    .thumb:hover .thumb-box,
+    .thumb:focus-visible .thumb-box {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 12px 22px rgba(11, 74, 166, 0.35);
+    }
+
+    .thumb:focus-visible {
+      outline: none;
+    }
 
 
     footer {
@@ -179,8 +235,21 @@
             margin: 8px 0 26px 0;
         }
 
-        .link {
-            padding: 13px 14px;
+        .thumbs-main {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 16px;
+        }
+
+        .thumbs-main .thumb-box {
+            max-width: 120px;
+        }
+
+        .thumb {
+            font-size: 0.85rem;
+        }
+
+        .thumbs-social {
+            gap: 8px;
         }
         }
 
@@ -203,14 +272,52 @@
       Simple and Precise Detection of Pathogens
     </p>
 
-    <nav class="links">
-      <a class="link" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQBm-FohTb92Q5Ds1rSZRZ0UAbeM7IKxPOLtjFLA3XGbRas?e=uzGaBh" target="_blank">One Pager</a>
-      <a class="link" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQCpMqt1k7pySa8cpLlxS_XuAf4Y8ptj2kCm5x05zGO27Gs" target="_blank">Flyer</a>
-      <a class="link" href="https://www.youtube.com/watch?v=1F7XxPBQaLY" target="_blank">Product Video</a>
-      <a class="link" href="https://detechgene.com" target="_blank">Website</a>
-      <a class="link" href="https://linkedin.com/company/detechgene">LinkedIn</a>
-      <a class="link" href="https://www.instagram.com/detechgene/">Instagram</a>
-      <a class="link" href="https://www.tiktok.com/@detechgene">TikTok</a>
+    <!--
+      ICONS: paste the Flaticon image URL into each src="" below.
+      While src is empty/invalid the dashed placeholder stays visible.
+    -->
+
+    <!-- Main thumbnails -->
+    <nav class="thumbs thumbs-main" aria-label="Documents and media">
+      <a class="thumb" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQCpMqt1k7pySa8cpLlxS_XuAf4Y8ptj2kCm5x05zGO27Gs" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/13558/13558967.png" alt="" onerror="this.remove()"></span>
+        <span>Flyer</span>
+      </a>
+      <a class="thumb" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQBm-FohTb92Q5Ds1rSZRZ0UAbeM7IKxPOLtjFLA3XGbRas?e=uzGaBh" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/7832/7832362.png" alt="" onerror="this.remove()"></span>
+        <span>One Pager</span>
+      </a>
+      <a class="thumb" href="https://www.youtube.com/watch?v=1F7XxPBQaLY" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/656/656444.png" alt="" onerror="this.remove()"></span>
+        <span>Product Video</span>
+      </a>
+      <!-- Awards: opens the website and scrolls to the awards section.
+           Change "#awards" to the real section id on detechgene.com -->
+      <a class="thumb" href="https://detechgene.com/#awards" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/8510/8510267.png" alt="" onerror="this.remove()"></span>
+        <span>Media</span>
+      </a>
+    </nav>
+
+    <!-- Social thumbnails -->
+    <nav class="thumbs thumbs-social" aria-label="Website and social media">
+      <a class="thumb" href="https://detechgene.com" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/4713/4713146.png" alt="" onerror="this.remove()"></span>
+        <span>Website</span>
+      </a>
+      <a class="thumb" href="https://linkedin.com/company/detechgene" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/3800/3800073.png" alt="" onerror="this.remove()"></span>
+        <span>LinkedIn</span>
+      </a>
+      <a class="thumb" href="https://www.instagram.com/detechgene/" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077042.png" alt="" onerror="this.remove()"></span>
+        <span>Instagram</span>
+      </a>
+      <a class="thumb" href="https://www.tiktok.com/@detechgene" target="_blank" rel="noopener">
+        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046125.png" alt="" onerror="this.remove()"></span>
+        <span>TikTok</span>
+      </a>
+
     </nav>
 
 
