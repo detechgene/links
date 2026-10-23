@@ -34,6 +34,14 @@
         --btn-hover-a: #cddfff;                /* hover */
         --btn-hover-b: #f0f5ff;                /* hover accent */
 
+        /* Brand palette */
+        --brand-bg: #1a3066;                   /* card background #14244d*/
+        --brand-hero: #0060FF;                 /* primary button */
+        --brand-tile: rgba(255, 255, 255, 0.08);       /* button tiles */
+        --brand-tile-hover: rgba(255,   255, 255, 0.14);
+        --brand-tile-border: rgba(255, 255, 255, 0.14);
+        --brand-text: #B3CEFF;                 /* secondary text & icons */
+
     }
 
     * {
@@ -47,7 +55,9 @@
         color: var(--text);
 
         background:
-            url("https://raw.githubusercontent.com/prgprg/detechgene_logo_simple/efa7d88e4a85d6ce5183f5ec2fdbd76a0fe58529/bg.svg");
+            url("Background_dark.svg");
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -61,20 +71,24 @@
 }
 
     .container {
-        width: 100%;
-        max-width: 520px;
+        /* 9:16 portrait card; grows taller only if the content needs it */
+        width: min(500px, 100%);
+        aspect-ratio: 9 / 16;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         /* gradient + opacity without fading children */
         /* background: linear-gradient(180deg, var(--card-a), var(--card-b)); */
-        background: rgb(246, 249, 255); /* semi-transparent white */
+        background: var(--brand-bg);
 
         border-radius: var(--radius);
         padding: 32px 24px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 40px #000000;
         text-align: center;
 
         /* optional: subtle border to look premium */
-        border: 1px solid rgba(255, 255, 255, 0.35);
+        border: 1px solid var(--brand-tile-border);
 
         /* optional: keep blur effect if supported */
         backdrop-filter: blur(10px);
@@ -84,7 +98,7 @@
     .logo {
         display: block;
         max-width: 100%;          
-        width: min(420px, 100%);  
+        width: min(320px, 100%);
         height: auto;             
         max-height: 120px;        
         margin: 0 auto 16px;      
@@ -111,101 +125,160 @@
         font-family: 'Sora', 'Inter', system-ui, sans-serif;
         font-weight: bolder;
         font-size: 1.2rem;
-        color: #1a3066;
+        color: #ffffff;
         text-align: center;
         line-height: 1.4;
-        margin: 8px 0 38px 0;
+        margin: 8px 0 28px 0;
         }
 
-    /* ---------- Thumbnail grids ---------- */
-    .thumbs {
-      display: grid;
-      gap: 16px;
-      justify-items: center;
-    }
-
-    /* Main thumbnails: 4 per row on PC, 2x2 on mobile */
-    .thumbs-main {
-      grid-template-columns: repeat(4, 1fr);
-      margin-bottom: 28px;
-    }
-
-    /* Social thumbnails: always 4 in one row, smaller */
-    .thumbs-social {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(26, 48, 102, 0.12);
-    }
-
-    .thumb {
+    /* ---------- Link buttons (list style) ---------- */
+    .links {
       display: flex;
       flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .link {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      width: 100%;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--brand-tile);
+      border: 1px solid var(--brand-tile-border);
+      color: #ffffff;
       text-decoration: none;
-      color: #1a3066;
+      text-align: left;
       font-family: 'Sora', 'Inter', system-ui, sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      line-height: 1.2;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .thumb-box {
-      /* ICON PLACEHOLDER: the box shows a dashed outline until an icon loads */
-      position: relative;
+    .link svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .link-icon {
+      color: var(--brand-text);
+    }
+
+    .link-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .link-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+      line-height: 1.25;
+    }
+
+    .link-sub {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--brand-text);
+      line-height: 1.3;
+    }
+
+    .link-end {
+      width: 18px !important;
+      height: 18px !important;
+      opacity: 0.85;
+    }
+
+    /* Highlighted primary action */
+    .link--primary {
+      background: var(--brand-hero);
+      border-color: transparent;
+    }
+
+    .link--primary .link-icon,
+    .link--primary .link-sub {
+      color: #e3ecff;
+    }
+
+    /* Contact button: deeper blue with accent border */
+    .link--contact {
+      background: rgba(0, 96, 255, 0.18);
+      border-color: rgba(0, 96, 255, 0.6);
+    }
+
+    .link:hover,
+    .link:focus-visible {
+      transform: translateY(-2px);
+      background: var(--brand-tile-hover);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      outline: none;
+    }
+
+    .link--primary:hover,
+    .link--primary:focus-visible {
+      background: #1a70ff;
+    }
+
+    .link--contact:hover,
+    .link--contact:focus-visible {
+      background: rgba(0, 96, 255, 0.28);
+    }
+
+    /* ---------- Social icons ---------- */
+    .social {
+      padding-top: 18px;
+      border-top: 1px solid var(--brand-tile-border);
+    }
+
+    .social-label {
+      margin: 0 0 12px;
+      font-family: 'Sora', 'Inter', system-ui, sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: var(--brand-text);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .social-icons a {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      max-width: 96px;
-      border-radius: 22%;
-      background: linear-gradient(135deg, var(--btn-hover-a), var(--btn-hover-b));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--brand-tile);
+      border: 1px solid var(--brand-tile-border);
+      color: #ffffff;
+      transition: transform 0.15s ease, background 0.15s ease;
     }
 
-    .thumb-box::before {
-      content: "";
-      position: absolute;
-      inset: 22%;
-      border: 2px dashed rgba(255, 255, 255, 0.35);
-      border-radius: 28%;
+    .social-icons svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
-    /* hide the placeholder once an icon is present */
-    .thumb-box:has(img)::before {
-      display: none;
-    }
-
-    .thumb-box img {
-      width: 52%;
-      height: 52%;
-      object-fit: contain;
-    }
-
-    .thumbs-social .thumb-box {
-      max-width: 60px;
-    }
-
-    .thumbs-social .thumb {
-      font-size: 0.7rem;
-      font-weight: 500;
-      gap: 6px;
-    }
-
-    .thumb:hover .thumb-box,
-    .thumb:focus-visible .thumb-box {
-      transform: translateY(-3px);
-      border-color: rgba(56, 189, 248, 0.55);
-      box-shadow: 0 12px 22px rgba(11, 74, 166, 0.35);
-    }
-
-    .thumb:focus-visible {
+    .social-icons a:hover,
+    .social-icons a:focus-visible {
+      transform: translateY(-2px);
+      background: var(--brand-hero);
       outline: none;
     }
 
@@ -235,21 +308,22 @@
             margin: 8px 0 26px 0;
         }
 
-        .thumbs-main {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px 16px;
+        .link {
+            padding: 12px 14px;
+            gap: 14px;
         }
 
-        .thumbs-main .thumb-box {
-            max-width: 120px;
+        .link-title {
+            font-size: 0.92rem;
         }
 
-        .thumb {
-            font-size: 0.85rem;
+        .link-sub {
+            font-size: 0.75rem;
         }
 
-        .thumbs-social {
-            gap: 8px;
+        .social-icons a {
+            width: 48px;
+            height: 48px;
         }
         }
 
@@ -260,7 +334,7 @@
     <!-- Logo -->
     <img
       class="logo"
-      src="https://github.com/prgprg/detechgene_logo_simple/blob/main/Logo_Transparent.png?raw=true"
+      src="Detechgene_Logo%201.svg"
       alt="logo"
       onerror="this.style.display='none'; document.getElementById('fallback-name').style.display='block';"
     />
@@ -272,53 +346,92 @@
       Simple and Precise Detection of Pathogens
     </p>
 
-    <!--
-      ICONS: paste the Flaticon image URL into each src="" below.
-      While src is empty/invalid the dashed placeholder stays visible.
-    -->
+    <!-- Main links -->
+    <nav class="links" aria-label="Products, documents and media">
+      <!-- TODO: replace "#" with the shop URL -->
+      <a class="link link--primary" href="https://www.detechgene.de/detechbeads" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <span class="link-text">
+          <span class="link-title">Shop our Products</span>
+          <span class="link-sub">DetechBeads · Coming soon: DetechRespi</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
 
-    <!-- Main thumbnails -->
-    <nav class="thumbs thumbs-main" aria-label="Documents and media">
-      <a class="thumb" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQCpMqt1k7pySa8cpLlxS_XuAf4Y8ptj2kCm5x05zGO27Gs" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/13558/13558967.png" alt="" onerror="this.remove()"></span>
-        <span>Flyer</span>
+      <a class="link" href="https://www.youtube.com/watch?v=1F7XxPBQaLY" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+        <span class="link-text">
+          <span class="link-title">Watch: How DetechNovo Works</span>
+          <span class="link-sub">Product demo video</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
-      <a class="thumb" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQBm-FohTb92Q5Ds1rSZRZ0UAbeM7IKxPOLtjFLA3XGbRas?e=uzGaBh" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/7832/7832362.png" alt="" onerror="this.remove()"></span>
-        <span>One Pager</span>
+
+      <a class="link" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQBm-FohTb92Q5Ds1rSZRZ0UAbeM7IKxPOLtjFLA3XGbRas?e=uzGaBh" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+        <span class="link-text">
+          <span class="link-title">Detechgene Flyer</span>
+          <span class="link-sub">Company &amp; product overview</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
       </a>
-      <a class="thumb" href="https://www.youtube.com/watch?v=1F7XxPBQaLY" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/656/656444.png" alt="" onerror="this.remove()"></span>
-        <span>Product Video</span>
+
+      <a class="link" href="https://detechgene-my.sharepoint.com/:b:/g/personal/a_pourgholami_detechgene_de/IQBm-FohTb92Q5Ds1rSZRZ0UAbeM7IKxPOLtjFLA3XGbRas?e=uzGaBh" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+        <span class="link-text">
+          <span class="link-title">DetechNovo One-Pager</span>
+          <span class="link-sub">Product specs &amp; details</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
       </a>
-      <!-- Awards: opens the website and scrolls to the awards section.
-           Change "#awards" to the real section id on detechgene.com -->
-      <a class="thumb" href="https://detechgene.com/#awards" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/8510/8510267.png" alt="" onerror="this.remove()"></span>
-        <span>Media</span>
+
+      <a class="link" href="https://www.detechgene.de/#:~:text=Kölnische%20Rundschau" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+        <span class="link-text">
+          <span class="link-title">Press &amp; Media Coverage</span>
+          <span class="link-sub">Newest Articles about us</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+
+      <a class="link" href="https://www.detechgene.de" target="_blank" rel="noopener">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        <span class="link-text">
+          <span class="link-title">Visit detechgene.de</span>
+          <span class="link-sub">Technology · About us · Career</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+
+      <a class="link link--contact" href="mailto:info@detechgene.de">
+        <svg class="link-icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        <span class="link-text">
+          <span class="link-title">Get in Touch</span>
+          <span class="link-sub">info@detechgene.de</span>
+        </span>
+        <svg class="link-end" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
     </nav>
 
-    <!-- Social thumbnails -->
-    <nav class="thumbs thumbs-social" aria-label="Website and social media">
-      <a class="thumb" href="https://detechgene.com" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/4713/4713146.png" alt="" onerror="this.remove()"></span>
-        <span>Website</span>
-      </a>
-      <a class="thumb" href="https://linkedin.com/company/detechgene" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/3800/3800073.png" alt="" onerror="this.remove()"></span>
-        <span>LinkedIn</span>
-      </a>
-      <a class="thumb" href="https://www.instagram.com/detechgene/" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077042.png" alt="" onerror="this.remove()"></span>
-        <span>Instagram</span>
-      </a>
-      <a class="thumb" href="https://www.tiktok.com/@detechgene" target="_blank" rel="noopener">
-        <span class="thumb-box"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046125.png" alt="" onerror="this.remove()"></span>
-        <span>TikTok</span>
-      </a>
-
-    </nav>
+    <!-- Social icons -->
+    <section class="social" aria-label="Social media">
+      <p class="social-label">Follow us</p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/detechgene/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://linkedin.com/company/detechgene" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@detechgene" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V2a5 5 0 0 0 5 5"/></svg>
+        </a>
+        <!-- TODO: replace "#" with the YouTube channel URL -->
+        <a href="#" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+        </a>
+      </div>
+    </section>
 
 
   </main>
